@@ -1,0 +1,1 @@
+SERVICE_URL = 'https://www.avito.ru/avito-care/eco-impact'
