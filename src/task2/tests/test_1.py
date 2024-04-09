@@ -31,27 +31,39 @@ def scroll_page(driver):
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, conf.FULL_AREA)))
     ActionChains(driver).move_to_element(element).perform()
 
-def test_screenshot_1(driver):
-    output_path_check()
-    scroll_page(driver)
-    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
+def make_screenshot(elements, test_num):
     values = {1: 'CO2', 3: 'water', 5: 'energy'}
     for i in range(1, 6, 2):
         element = elements[i]
-        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_1_element_{values[i]}.png')
+        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_{test_num}_element_{values[i]}.png')
         element.screenshot(screenshot_file)
-    
-    
-    
-    # element_full = driver.find_element(By.CSS_SELECTOR, '.desktop-impact-items-F7T6E')
-    # screenshot_file = os.path.join(conf.OUTPUT_DIR, 'screenshot.png')
-    # element_full.screenshot(os.path.join(conf.OUTPUT_DIR, 'element_full_screenshot.png'))
-    # element_co2.screenshot(os.path.join(conf.OUTPUT_DIR, 'element_co2_screenshot.png'))
-    # driver.save_screenshot(screenshot_file)
 
+# Визуальное отображение
+def test_1_visual(driver):
+    output_path_check()
+    scroll_page(driver)
+    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
+    make_screenshot(elements, 1)
 
-    # def test_getting_card():
-#     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36', 'Accept': 'application/json'}
-#     response = requests.get(url=SERVICE_URL, headers=headers)
-#     # print(response.json())
-#     assert response.status_code == 200, GlobalErrorMessages.WRONG_STATUS_CODE.value
+# Отображение значений по умолчанию
+def test_2_default_values(driver):
+    output_path_check()
+    scroll_page(driver)
+    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
+    make_screenshot(elements, 2)
+    elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
+    for element in elements_value:
+        value = element.text.strip()
+        assert value == "0", f"Expected default value, got {value}"
+
+# Отображение числовых значений
+def test_3_correct_values(driver):
+    output_path_check()
+    scroll_page(driver)
+    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
+    make_screenshot(elements, 3)
+    elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
+    for element in elements_value:
+        value = element.text.strip()
+        assert value == float(value), f"Expected float value, got {value}"
+

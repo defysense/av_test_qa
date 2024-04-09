@@ -1,4 +1,5 @@
 SERVICE_URL = 'https://www.avito.ru/avito-care/eco-impact'
 FULL_AREA = '.desktop-impact-items-F7T6E'
 ELEMENT_CSS_SELECTOR = '.desktop-impact-item-eeQO3'
+VALUE_CSS_SELECTOR = '.desktop-value-Nd1tR'
 OUTPUT_DIR = 'output'
