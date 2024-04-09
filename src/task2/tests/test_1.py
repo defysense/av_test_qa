@@ -22,14 +22,18 @@ def driver():
     yield driver
     driver.quit()
 
-def test_screenshot_1(driver):
+def output_path_check():
     if not os.path.exists(conf.OUTPUT_DIR):
         os.makedirs(conf.OUTPUT_DIR)
-    
+
+def scroll_page(driver):
     driver.get(url=conf.SERVICE_URL)
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, conf.FULL_AREA)))
-    
     ActionChains(driver).move_to_element(element).perform()
+
+def test_screenshot_1(driver):
+    output_path_check()
+    scroll_page(driver)
     elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     values = {1: 'CO2', 3: 'water', 5: 'energy'}
     for i in range(1, 6, 2):
