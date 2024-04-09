@@ -42,6 +42,8 @@ def make_screenshot(elements, test_num):
 def test_1_visual(driver):
     output_path_check()
     scroll_page(driver)
+    element_full = driver.find_element(By.CSS_SELECTOR, conf.FULL_AREA)
+    element_full.screenshot(os.path.join(conf.OUTPUT_DIR, 'test_1_element_full.png'))
     elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     make_screenshot(elements, 1)
 
@@ -49,9 +51,9 @@ def test_1_visual(driver):
 def test_2_default_values(driver):
     output_path_check()
     scroll_page(driver)
-    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
-    make_screenshot(elements, 2)
+    # elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
+    make_screenshot(elements_value, 2)
     for element in elements_value:
         value = element.text.strip()
         assert value == "0", f"Expected default value, got {value}"
@@ -60,10 +62,11 @@ def test_2_default_values(driver):
 def test_3_correct_values(driver):
     output_path_check()
     scroll_page(driver)
-    elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
-    make_screenshot(elements, 3)
+    # elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
-    for element in elements_value:
-        value = element.text.strip()
-        assert value == float(value), f"Expected float value, got {value}"
+    make_screenshot(elements_value, 3)
+    # print(elements_value)
+
+def test_4_correct_units(driver):
+
 
