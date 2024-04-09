@@ -22,27 +22,27 @@ def driver():
     yield driver
     driver.quit()
 
-def test_screenshot(driver):
-    output_dir = 'output'
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+def test_screenshot_1(driver):
+    if not os.path.exists(conf.OUTPUT_DIR):
+        os.makedirs(conf.OUTPUT_DIR)
     
     driver.get(url=conf.SERVICE_URL)
     element = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, conf.FULL_AREA)))
     
     ActionChains(driver).move_to_element(element).perform()
     elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
+    values = {1: 'CO2', 3: 'water', 5: 'energy'}
     for i in range(1, 6, 2):
         element = elements[i]
-        screenshot_file = os.path.join(output_dir, f'element_{i}.png')
+        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_1_element_{values[i]}.png')
         element.screenshot(screenshot_file)
     
     
     
     # element_full = driver.find_element(By.CSS_SELECTOR, '.desktop-impact-items-F7T6E')
-    # screenshot_file = os.path.join(output_dir, 'screenshot.png')
-    # element_full.screenshot(os.path.join(output_dir, 'element_full_screenshot.png'))
-    # element_co2.screenshot(os.path.join(output_dir, 'element_co2_screenshot.png'))
+    # screenshot_file = os.path.join(conf.OUTPUT_DIR, 'screenshot.png')
+    # element_full.screenshot(os.path.join(conf.OUTPUT_DIR, 'element_full_screenshot.png'))
+    # element_co2.screenshot(os.path.join(conf.OUTPUT_DIR, 'element_co2_screenshot.png'))
     # driver.save_screenshot(screenshot_file)
 
 
