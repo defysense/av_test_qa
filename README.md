@@ -12,7 +12,7 @@
 - Откройте терминал в корневой папке проекта.  
 - Выполните команду: `pip install -r requirements.txt`  
   **Если не UBUNTU**
-- Выполните команду `pip install pytest selenium, webdriver_manager`
+- Выполните команду `pip install pytest selenium webdriver_manager`
 2. Запуск скрипта:
 - В терминале из папки `av_test_qa/src/task2` выполните команду: `sh start.sh`
 - Этот скрипт выполнит следующие действия:
