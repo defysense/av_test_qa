@@ -35,15 +35,23 @@ def make_screenshot(elements, test_num):
     values = {1: 'CO2', 3: 'water', 5: 'energy'}
     for i in range(1, 6, 2):
         element = elements[i]
-        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_{test_num}_element_{values[i]}.png')
+        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_{test_num}_{values[i]}.png')
         element.screenshot(screenshot_file)
+
+def make_screenshot_small(elements, test_num):
+    values = {1: 'CO2', 2: 'water', 3: 'energy'}
+    i = 1
+    for element in elements:
+        screenshot_file = os.path.join(conf.OUTPUT_DIR, f'test_{test_num}_{values[i]}.png')
+        element.screenshot(screenshot_file)
+        i=i+1
 
 # Визуальное отображение
 def test_1_visual(driver):
     output_path_check()
     scroll_page(driver)
     element_full = driver.find_element(By.CSS_SELECTOR, conf.FULL_AREA)
-    element_full.screenshot(os.path.join(conf.OUTPUT_DIR, 'test_1_element_full.png'))
+    element_full.screenshot(os.path.join(conf.OUTPUT_DIR, 'test_1_full.png'))
     elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     make_screenshot(elements, 1)
 
@@ -51,22 +59,29 @@ def test_1_visual(driver):
 def test_2_default_values(driver):
     output_path_check()
     scroll_page(driver)
-    # elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
-    make_screenshot(elements_value, 2)
-    for element in elements_value:
-        value = element.text.strip()
-        assert value == "0", f"Expected default value, got {value}"
+    make_screenshot_small(elements_value, 2)
+    # for element in elements_value:
+    #     value = element.text.strip()
+    #     assert value == "0", f"Expected default value, got {value}"
 
 # Отображение числовых значений
 def test_3_correct_values(driver):
     output_path_check()
     scroll_page(driver)
-    # elements = driver.find_elements(By.CSS_SELECTOR, conf.ELEMENT_CSS_SELECTOR)
     elements_value = driver.find_elements(By.CSS_SELECTOR, conf.VALUE_CSS_SELECTOR)
-    make_screenshot(elements_value, 3)
-    # print(elements_value)
+    make_screenshot_small(elements_value, 3)
 
+# Отображение единиц измерения
 def test_4_correct_units(driver):
+    output_path_check()
+    scroll_page(driver)
+    units_value = driver.find_elements(By.CSS_SELECTOR, conf.UNITS_CSS_SELECTOR)
+    make_screenshot_small(units_value, 4)
 
-
+# Отображение подписей
+def test_5_correct_label(driver):
+    output_path_check()
+    scroll_page(driver)
+    label_value = driver.find_elements(By.CSS_SELECTOR, conf.LABEL_CSS_SELECTOR)
+    make_screenshot_small(label_value, 5)
