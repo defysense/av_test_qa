@@ -1,8 +1,9 @@
 import os
 import requests
 import sys
+sys.path.append('../')
+import task2.configuration as conf
 sys.path.append('../..')
-import configuration as conf
 from src.enums.global_enums import GlobalErrorMessages
 
 from selenium import webdriver
